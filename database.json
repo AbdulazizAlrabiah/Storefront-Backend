@@ -2,14 +2,13 @@
     "dev": {
       "driver": "pg",
       "host": "127.0.0.1",
-      "database": "full_stack_dev_az",
-      "user": "full_stack_user_az",
-      "password": "password1234"
+      "database": "store_front",
+      "password": "password123"
     },
     "test": {
       "driver": "pg",
       "host": "127.0.0.1",
-      "database": "full_stack_dev_az_test",
-      "password": "password1234"
+      "database": "store_front_test",
+      "password": "password123"
     }
 }
