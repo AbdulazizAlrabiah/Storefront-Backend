@@ -4,39 +4,42 @@ The company stakeholders want to create an online storefront to showcase their g
 These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application. 
 
 ## API Endpoints
+
 #### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
+- Index: 'api/products' [GET]
+- Show: 'api/product/:id' [GET]
+- Create (Add product to user's order): 'api/product' [POST] [token required]
 
 #### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- Index: 'api/users' [GET] [token required]
+- Show: 'api/user/:id' [GET] [token required]
+- Create: 'api/user' [POST] [token returned]
 
 #### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- Current Order by user: 'api/order' [token required]
 
-## Data Shapes
-#### Product
--  id
-- name
-- price
-- [OPTIONAL] category
+## Database Schema
 
-#### User
-- id
-- firstName
-- lastName
-- password
+#### products
+- id: primary Key 
+- name: VARCHAR(128)
+- price: NUMERIC(6, 2)
+- category: VARCHAR(16) [Local or Imported]
 
-#### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
+#### users
+- id: primary Key
+- first_name: VARCHAR(64)
+- last_name: VARCHAR(64)
+- password: VARCHAR(256)
+
+#### orders
+- id: primary Key
+- user_id: users table foreign key
+- status: VARCHAR(16) [Active or Complete]
+
+#### order_products
+- id: primary Key
+- product_id: products table foreign key
+- order_id: orders table foreign key
+- quantity: integer
 
