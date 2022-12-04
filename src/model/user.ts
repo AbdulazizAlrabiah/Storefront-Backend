@@ -1,81 +1,106 @@
 import client from '../database';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { generateToken } from '../controller/authentication';
 
 const bcrypt_pepper = process.env.BCRYPT_PASSWORD;
 const salt_rounds = parseInt(process.env.SALT_ROUNDS as unknown as string);
 
 export type User = {
-    id: number
-    firstName: String
-    lastName: String
-    password: String
-}
+  id: number;
+  firstName: String;
+  lastName: String;
+  password: String;
+};
 
 export class UserStore {
+  static async listAll(): Promise<Omit<User, 'password'>[]> {
+    try {
+      const con = await client.connect();
+      const sql = 'SELECT id, first_name, last_name FROM users';
+      const result = await con.query(sql);
 
-    static async listAll(): Promise<User[]> {
+      con.release();
 
-        try {
-            const con = await client.connect();
-            const sql = 'SELECT (id, first_name, last_name) FROM users'
-            const result = await con.query(sql);
+      console.log(result.rows);
 
-            con.release();
+      //   const order: Order = {
+      //     id: orderId,
+      //     userId: userId,
+      //     products: productsResult.rows.map((product) => ({
+      //       productId: parseInt(product.product_id),
+      //       quantity: parseInt(product.quantity),
+      //     })),
 
-            console.log(result.rows)
+      const users: Omit<User, 'password'>[] = [];
 
-            return result.rows;
-        }
-        catch (err) {
-            throw new Error(`error ${err}`);
-        }
+      for (let user of result.rows) {
+        users.push({
+          id: user.id,
+          firstName: user.first_name,
+          lastName: user.last_name,
+        });
+      }
+
+      return users;
+    } catch (err) {
+      throw new Error(`error ${err}`);
     }
+  }
 
-    static async showUserAt(id: number): Promise<User>  {
+  static async showUserAt(id: number): Promise<Omit<User, 'password'> | null> {
+    try {
+      const con = await client.connect();
+      const sql = 'SELECT id, first_name, last_name FROM users WHERE id=$1';
+      const result = await con.query(sql, [id]);
 
-        try {
-            const con = await client.connect();
-            const sql = 'SELECT (id, first_name, last_name) FROM users WHERE id=$1'
-            const result = await con.query(sql, [id]);
+      con.release();
 
-            con.release();
+      console.log(result.rows);
 
-            console.log(result.rows)
+      const user: Omit<User, 'password'> = {
+        id: result.rows[0]?.id,
+        firstName: result.rows[0]?.first_name,
+        lastName: result.rows[0]?.last_name,
+      };
 
-            return result.rows[0];
-        }
-        catch (err) {
-            throw new Error(`error ${err}`);
-        }
+      return user;
+    } catch (err) {
+      console.log(err);
+      throw new Error(`error ${err}`);
     }
+  }
 
-    static async insertUser(user: Omit<User, 'id'>): Promise<String> {
+  static async insertUser(user: Omit<User, 'id'>): Promise<String> {
+    try {
+      const con = await client.connect();
+      const sql =
+        'INSERT INTO users (first_name, last_name, password) VALUES ($1, $2, $3) RETURNING *';
+      const hashedPassword = bcrypt.hashSync(
+        user.password + String(bcrypt_pepper),
+        salt_rounds
+      );
+      const params = [user.firstName, user.lastName, hashedPassword];
+      const result = await con.query(sql, params);
 
-        try {
-            const con = await client.connect();
-            const sql = 'INSERT INTO users (first_name, last_name, password) VALUES ($1, $2, $3) RETURNING *'
-            const hashedPassword = bcrypt.hashSync(user.password + String(bcrypt_pepper), salt_rounds);
-            const params = [user.firstName, user.lastName, hashedPassword];
-            const result = await con.query(sql, params);
-            
-            const newUser = result.rows[0];
+      const newUser: Omit<User, 'password'> = {
+        id: result.rows[0]?.id,
+        firstName: result.rows[0]?.first_name,
+        lastName: result.rows[0]?.last_name,
+      };
 
-            con.release();
+      con.release();
 
-            console.log(newUser);
+      console.log(newUser);
 
-            const token = jwt.sign({ user: {
-                id: parseInt(newUser.id as string),
-                username: newUser.name,
-            }, }, String(process.env.TOKEN_SECRET));
+      const token = generateToken(newUser);
 
-            console.log(token)
+      console.log(token);
 
-            return token;
-        }
-        catch (err) {
-            throw new Error(`error ${err}`);
-        }
+      return token;
+    } catch (err) {
+      console.log(err);
+      throw new Error(`error ${err}`);
     }
+  }
 }
