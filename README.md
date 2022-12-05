@@ -14,15 +14,21 @@ A Web Server Application written in TypeScript to serve a small E-commerce proto
 
 1- Run 'npm i' before building and running the application.
 
-2- Create a postgres database with the name 'store_front' and a test one with the name 'store_front_test'.
+2- Create a user with the name 'store_front_user'.
 
-3- Here is a sample dotenv configurations:
+3- Create a postgres database with the name 'store_front' and a test one with the name 'store_front_test'.
+
+4- Grant the user the right privileges.
+
+5- Here is a sample dotenv configurations:
 
 HOST=127.0.0.1
 
 DATABASE=store_front
 
 TEST_DATABASE=store_front_test
+
+USER=store_front_user
 
 PASSWORD=password123
 
@@ -34,9 +40,9 @@ TOKEN_SECRET=TokenSecret123
 
 ENV=dev
 
-4- You can use the scripts in the package.json file to build, test, lint, format and run the project.
+6- You can use the scripts in the package.json file to build, test, lint, format and run the project.
 
-5- When needing to run the test script, modify the ENV field to 'test' and change it back when you need to run the application.
+7- When needing to run the test script, modify the ENV field to 'test' and change it back when you need to run the application.
 
 Application will be running on localhost port '3000' by default
 
