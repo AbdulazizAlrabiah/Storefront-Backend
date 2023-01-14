@@ -3,8 +3,9 @@
 ## Table of Contents
 
 - [Description](#Description)
-- [Instructions](#instructions)
-- [Contributing](#contributing)
+- [Instructions](#Instructions)
+- [Photos-Attribution](#Photos-Attribution)
+- [Contributing](#Contributing)
 
 ## Description
 
@@ -46,6 +47,11 @@ Database will be running on localhost port '5432' by default
 
 APIs and Database Schema are in the REQUIREMENTS.md file.
 
+## Photos-Attribution
+
+- All other image links are by JeepersMedia is licensed under CC BY 2.0. To view a copy of this license, visit [license](https://creativecommons.org/licenses/by/2.0/?ref=openverse).
+- "vita-mix hummus" by tofutti break is licensed under CC BY-NC-ND 2.0. To view a copy of this license, visit [license](https://creativecommons.org/licenses/by-nd-nc/2.0/jp/?ref=openverse).
+
 ## Contributing
 
-This repository is Storefront-Backend Application for Udacity Full Stack Javascript Developer.
+This repository is Storefront-Backend Application for Udacity Full Stack Javascript Developer Nanodegree course.

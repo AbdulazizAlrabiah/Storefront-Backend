@@ -8,7 +8,6 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### Products
 - Index: 'api/products' [GET]
 - Show: 'api/product/:id' [GET]
-- Create (Add product to user's order): 'api/product' [POST] [token required]
 
 #### Users
 - Index: 'api/users' [GET] [token required]
@@ -16,7 +15,9 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Create: 'api/user' [POST] [token returned]
 
 #### Orders
-- Current Order by user: 'api/order' [token required]
+- Create (Add product to user's order): 'api/order' [POST] [token required]
+- Delete (Delete product from user's order): 'api/order' [DELETE] [token required]
+- Current Order by user: 'api/order' [GET] [token required]
 
 ## Database Schema
 
