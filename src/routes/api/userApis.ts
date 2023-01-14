@@ -64,6 +64,7 @@ export async function createUser(
     const token = await UserStore.insertUser(newUser);
     res.json(token).status(200);
   } catch {
+    console.log('Error in request');
     res.status(400).json('Error in request');
   }
 }

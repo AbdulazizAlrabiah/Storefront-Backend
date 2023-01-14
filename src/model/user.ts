@@ -24,14 +24,6 @@ export class UserStore {
 
       console.log(result.rows);
 
-      //   const order: Order = {
-      //     id: orderId,
-      //     userId: userId,
-      //     products: productsResult.rows.map((product) => ({
-      //       productId: parseInt(product.product_id),
-      //       quantity: parseInt(product.quantity),
-      //     })),
-
       const users: Omit<User, 'password'>[] = [];
 
       for (let user of result.rows) {
