@@ -1,10 +1,11 @@
 import client from '../database';
+import { Product, ProductStore } from './product';
 
 export type Order = {
   id: number;
-  userId: number;
+  userId: number
   products: {
-    productId: number;
+    product: Product;
     quantity: number;
   }[];
   status: String;
@@ -32,12 +33,42 @@ export class OrderStore {
 
       console.log(productsResult.rows);
 
+      const products: Product[] = [];
+
+      // Any type for simplicity and efficiency
+      await Promise.all(productsResult.rows.map(async (orderProduct) => {
+        const product = await ProductStore.showProductAt(orderProduct.product_id as number);
+
+        console.log('product:' + product);
+
+        (product as any).quantity = orderProduct.quantity;
+        products.push(product);
+        return product;
+      }));
+
+      products.sort((a, b) => a.id - b.id);
+
+      // TODO: Enhance merging (has an unknown bug) and extract to method
+
+      products.map( (product1) => {
+        // Merge duplicate products by quantity
+        
+        products.map( (product2) => {
+          if (product1.id === product2.id && product1 !== product2) {
+            (product1 as any).quantity += (product2 as any).quantity;
+            products.splice(products.indexOf(product2), 1);
+          }
+        });
+      });
+
+      console.log('products:' + products)
+
       const order: Order = {
         id: orderId,
         userId: userId,
-        products: productsResult.rows.map((product) => ({
-          productId: parseInt(product.product_id),
-          quantity: parseInt(product.quantity),
+        products: products.map( (product) => ({
+          product: product,
+          quantity: parseInt((product as any).quantity),
         })),
         status: 'Active',
       };
