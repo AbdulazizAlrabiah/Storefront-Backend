@@ -104,4 +104,36 @@ export class OrderStore {
       throw new Error(`error ${err}`);
     }
   }
+
+  // returns the deleted product if the order was found
+  // returns null when order is not found
+  static async deleteProductFromOrder(
+    userId: number,
+    productId: number
+  ): Promise<Product | null> {
+    try {
+      const con = await client.connect();
+      const sql = "SELECT id FROM orders WHERE user_id=$1 AND status='Active'";
+      const selectResult = await con.query(sql, [userId]);
+
+      const orderId = selectResult.rows[0]?.id;
+      
+      if (orderId != null) {
+        const sql2 = 'DELETE FROM order_products WHERE product_id=$1 AND order_id=$2 RETURNING product_id';
+        const deleteProductResult = await con.query(sql2, [productId, orderId]);
+
+        con.release();
+
+        console.log(deleteProductResult.rows);
+
+        return await ProductStore.showProductAt(deleteProductResult.rows[0].product_id as number);
+      } else {
+        // Order not found
+        return null
+      }
+    } catch (err) {
+      console.log(err);
+      throw new Error(`error ${err}`);
+    }
+  }
 }

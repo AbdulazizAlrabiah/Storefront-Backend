@@ -46,3 +46,29 @@ export async function addProductToOrder(
     res.status(500).json('Server error, please try again');
   }
 }
+
+export async function deleteProductFromOrder(
+  req: express.Request,
+  res: express.Response
+): Promise<void> {
+  const productId = parseInt(req.body['productId']);
+
+  if (!validateNotEmptyOrNull(productId)) {
+    res
+      .status(400)
+      .send('Please enter the required field (productId)');
+    return;
+  }
+
+  console.log(req.body.userId);
+
+  try {
+    const product = await OrderStore.deleteProductFromOrder(
+      req.body.userId,
+      productId
+    );
+    res.json(product).status(200);
+  } catch {
+    res.status(500).json('Server error, please try again');
+  }
+}

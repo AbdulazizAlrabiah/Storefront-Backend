@@ -1,7 +1,7 @@
 import express from 'express';
 import { getAllUsers, getUser, createUser } from './api/userApis';
 import { getAllProducts, getProduct } from './api/productApis';
-import { getActiveOrder, addProductToOrder } from './api/orderApis';
+import { getActiveOrder, addProductToOrder, deleteProductFromOrder } from './api/orderApis';
 import { authenticate } from '../controller/authentication';
 
 const routes = express.Router();
@@ -18,5 +18,6 @@ routes.get('/product/:id', getProduct);
 // Order
 routes.get('/order', authenticate, getActiveOrder);
 routes.post('/order', authenticate, addProductToOrder);
+routes.delete('/order', authenticate, deleteProductFromOrder);
 
 export default routes;
