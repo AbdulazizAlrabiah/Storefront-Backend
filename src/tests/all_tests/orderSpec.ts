@@ -11,6 +11,6 @@ describe('User model tests', () => {
     const order = await OrderStore.showOrderAt(1);
 
     expect(order?.userId).toEqual(1);
-    expect(order?.products[0].productId).toEqual(5);
+    expect(order?.products[0].product.id).toEqual(5);
   });
 });
