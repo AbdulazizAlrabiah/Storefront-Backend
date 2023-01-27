@@ -7,9 +7,10 @@
     "test": "db-migrate --env test up && npm run build && ENV=test npm run jasmine && db-migrate --env test reset",
     "jasmine": "jasmine",
     "start": "db-migrate up && nodemon src/server.ts",
-    "build": "db-migrate up && npx tsc",
+    "build": "npx tsc",
     "prettier": "prettier --config .prettierrc '**/*.ts' --write",
-    "lint": "eslint '**/*.ts' "
+    "lint": "eslint '**/*.ts' ",
+    "deploy": "chmod +x scripts/deploy.sh && scripts/deploy.sh"
   },
   "keywords": [],
   "author": "",
