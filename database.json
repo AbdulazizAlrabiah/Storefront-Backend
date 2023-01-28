@@ -1,15 +1,24 @@
 {
+  "defaultEnv": "dev",
+  "prod": {
+    "driver": "pg",
+    "host": { "ENV": "PROD_DB_HOST" },
+    "database": {"ENV": "PROD_DB_NAME" },
+    "username": { "ENV": "PROD_DB_USER" },
+    "password": { "ENV": "PROD_DB_PASS"}
+  },
     "dev": {
       "driver": "pg",
-      "host": "127.0.0.1",
-      "database": "store_front",
-      "username": "store_front_user",
-      "password": "password123"
+      "host": { "ENV": "HOST" },
+      "database": { "ENV": "DATABASE"},
+      "username": { "ENV": "USER" },
+      "password": { "ENV": "PASSWORD" }
     },
     "test": {
       "driver": "pg",
-      "host": "127.0.0.1",
-      "database": "circle_test",
-      "username": "postgres"
+      "host": { "ENV": "HOST" },
+      "database": { "ENV": "TEST_DATABASE"},
+      "username": { "ENV": "USER" },
+      "password": { "ENV": "PASSWORD" }
     }
 }
