@@ -6,9 +6,15 @@ jobs:
  build-test-deploy:
   docker:
      - image: 'cimg/node:16.17'
+     - image: cimg/postgres:14.0
+       environment:
+         POSTGRES_USER: postgres
   steps:
      - checkout
      - node/install
+     - run:
+        name: Wait for Postgres DBMS to be ready # So we will not execute the automated tests before the DB is ready
+        command: dockerize -wait tcp://localhost:5432 -timeout 1m
      - run:
         name: Install Dependencies
         command: npm i
