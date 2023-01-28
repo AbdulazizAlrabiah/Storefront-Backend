@@ -4,7 +4,8 @@ import routes from './routes/router';
 import cors from 'cors';
 
 const app: express.Application = express();
-const address: string = 'Local Host port 3000';
+
+const { ENV } = process.env;
 
 const corsOptions = {
   origin: '*',
@@ -15,6 +16,12 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use('/api', routes);
 
+if (ENV === 'test') {
 app.listen(3000, function () {
-  console.log(`starting app on: ${address}`);
+  console.log('starting app on: Localhost:3000');
 });
+} else {
+  app.listen(function () {
+    console.log('starting app');
+  });
+}
