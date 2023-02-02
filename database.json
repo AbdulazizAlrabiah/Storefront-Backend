@@ -7,18 +7,18 @@
     "username": { "ENV": "PROD_DB_USER" },
     "password": { "ENV": "PROD_DB_PASS"}
   },
-    "dev": {
-      "driver": "pg",
-      "host": { "ENV": "HOST" },
-      "database": { "ENV": "DATABASE"},
-      "username": { "ENV": "USER" },
-      "password": { "ENV": "PASSWORD" }
-    },
-    "test": {
-      "driver": "pg",
-      "host": { "ENV": "HOST" },
-      "database": { "ENV": "TEST_DATABASE"},
-      "username": { "ENV": "USER" },
-      "password": { "ENV": "PASSWORD" }
-    }
+  "dev": {
+    "driver": "pg",
+    "host": { "ENV": "HOST" },
+    "database": { "ENV": "DATABASE"},
+    "username": { "ENV": "USER" },
+    "password": { "ENV": "PASSWORD" }
+  },
+  "test": {
+    "driver": "pg",
+    "host": { "ENV": "HOST" },
+    "database": { "ENV": "TEST_DATABASE"},
+    "username": { "ENV": "USER" },
+    "password": { "ENV": "PASSWORD" }
+  }
 }
