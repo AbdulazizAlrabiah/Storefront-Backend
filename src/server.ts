@@ -5,7 +5,7 @@ import cors from 'cors';
 
 const app: express.Application = express();
 
-const { ENV } = process.env;
+const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
   origin: '*',
@@ -16,12 +16,6 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use('/api', routes);
 
-if (ENV === 'test') {
-app.listen(3000, function () {
-  console.log('starting app on: Localhost:3000');
+app.listen(PORT, function () {
+  console.log('starting app on port 3000');
 });
-} else {
-  app.listen(function () {
-    console.log('starting app');
-  });
-}
