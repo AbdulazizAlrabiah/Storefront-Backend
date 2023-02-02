@@ -193,4 +193,9 @@ dist
 .history
 .ionide
 
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,visualstudiocode
