@@ -12,6 +12,9 @@ jobs:
   steps:
      - checkout
      - node/install
+     - run: sudo apt-get update
+     - run: sudo apt-get install python3-pip
+     - run: sudo pip3 install awsebcli
      - run:
         name: Wait for Postgres DBMS to be ready # So we will not execute the automated tests before the DB is ready
         command: dockerize -wait tcp://localhost:5432 -timeout 1m
@@ -26,7 +29,7 @@ jobs:
         command: npm run test
      - run:
         name: Deploy
-        command: npm run deploy
+        command: npm run deploy # Deletes node_modules then deploys to Elastic Beanstalk
 workflows:
  build-workflow:
   jobs:
