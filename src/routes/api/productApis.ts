@@ -9,7 +9,8 @@ export async function getAllProducts(
   try {
     const products = await ProductStore.listAll();
     res.status(200).json(products);
-  } catch {
+  } catch (err) {
+    console.log(err);
     res.status(500).send('Server error, please try again');
   }
 }

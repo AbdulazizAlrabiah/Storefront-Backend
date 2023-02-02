@@ -33,6 +33,7 @@ export class ProductStore {
 
       return products;
     } catch (err) {
+      console.log(err);
       throw new Error(`error ${err}`);
     }
   }
