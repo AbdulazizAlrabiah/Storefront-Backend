@@ -31,5 +31,9 @@ jobs:
         command: npm run deploy
 workflows:
  build-workflow:
-  jobs:
-    - build-test-deploy
+   jobs:
+     - build-test-deploy:
+         filters:
+            branches:
+               only:
+                - main
